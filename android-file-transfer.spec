@@ -20,7 +20,7 @@ BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Gui)
 BuildRequires:	pkgconfig(Qt5Widgets)
 # only in cooker
-BuildRequires:	qt5-qtbase-devel
+# BuildRequires:	qt5-qtbase-devel
 #
 BuildRequires:	desktop-file-utils
 BuildRequires:	appstream-util
