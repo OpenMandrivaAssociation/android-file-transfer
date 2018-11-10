@@ -2,16 +2,12 @@
 
 Summary:	Interactive MTP client with Qt GUI
 Name:		android-file-transfer
-Version:	2.3
-Release:	2
+Version:	3.6
+Release:	1
 License:	GPLv2+
 Group:		File tools
 Url:		https://github.com/whoozle/android-file-transfer-linux/
-# From git by tag https://github.com/whoozle/android-file-transfer-linux/
-Source0:	%{name}-linux-%{version}.tar.gz
-# Provided upstream by the developer :
-# https://github.com/whoozle/android-file-transfer-linux/commit/ada01cf7bc57fcfb99f540cc098e5393937a0436
-Source1:	android-file-transfer.appdata.xml
+Source0:  https://github.com/whoozle/android-file-transfer-linux/archive/v%{version}/%{name}-linux-%{version}.tar.gz
 
 BuildRequires:	cmake
 BuildRequires:	imagemagick
@@ -22,45 +18,42 @@ BuildRequires:	pkgconfig(Qt5Widgets)
 BuildRequires:	qt5-qtbase-devel
 BuildRequires:	desktop-file-utils
 BuildRequires:	appstream-util
+BuildRequires:	pkgconfig(fuse)
+BuildRequires:	readline-devel
+BuildRequires:	ninja
 
 %description
 Interactive MTP client with Qt GUI.
 
-%files
-%doc LICENSE README.md
-%{_bindir}/%{name}
-%{_bindir}/aft-mtp-cli
-%{_bindir}/aft-mtp-mount
-%{_datadir}/applications/%{name}.desktop
-%{_iconsdir}/hicolor/*/apps/%{name}.png
-%{_appdatadir}/%{name}.appdata.xml
-
 #----------------------------------------------------------------------------
 
 %prep
-%setup -qn %{name}-linux-%{version}
-cp -R %{SOURCE1} android-file-transfer.appdata.xml
+%autosetup -p1 -n %{name}-linux-%{version}
 
 %build
-%cmake_qt5
-%make
+%cmake -GNinja
+
+%ninja_build
 
 %install
-%makeinstall_std -C build
+%ninja_install -C build
 
-# install menu entry
-desktop-file-install qt/%{name}.desktop \
-  --dir=%{buildroot}%{_datadir}/applications
-  
-# install menu icons
-for N in 16 32 48 64 128 256;
-do
-convert qt/%{name}.png -scale ${N}x${N} $N.png;
-install -D -m 0644 $N.png %{buildroot}%{_iconsdir}/hicolor/${N}x${N}/apps/%{name}.png
-done
+find %{buildroot} -name '*.a' -delete
 
-#appdata
-mkdir -p %{buildroot}%{_appdatadir}
-cp -R %{SOURCE1} %{buildroot}%{_appdatadir}/android-file-transfer.appdata.xml
-appstream-util validate-relax --nonet %{buildroot}%{_appdatadir}/*.xml
+desktop-file-install                                       \
+    --remove-category="System"                             \
+    --remove-category="Filesystem"                         \
+    --delete-original                                      \
+    --dir=%{buildroot}%{_datadir}/applications             \
+    %{buildroot}%{_datadir}/applications/%{name}.desktop
 
+%check
+appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/%{name}.appdata.xml
+
+%files
+%doc README.md FAQ.md
+%license LICENSE
+%{_bindir}/*
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/metainfo/%{name}.appdata.xml
+%{_iconsdir}/hicolor/*/apps/%{name}.png
