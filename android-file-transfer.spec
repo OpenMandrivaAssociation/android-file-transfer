@@ -2,7 +2,7 @@
 
 Summary:	Interactive MTP client with Qt GUI
 Name:		android-file-transfer
-Version:	3.6
+Version:	3.7
 Release:	1
 License:	GPLv2+
 Group:		File tools
