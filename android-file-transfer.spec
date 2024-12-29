@@ -12,19 +12,21 @@ Source0:  https://github.com/whoozle/android-file-transfer-linux/archive/v%{vers
 BuildRequires:	cmake
 BuildRequires:	imagemagick
 BuildRequires:	pkgconfig(fuse)
-BuildRequires:	pkgconfig(Qt5Core)
-BuildRequires:	pkgconfig(Qt5Gui)
-BuildRequires:	pkgconfig(Qt5Widgets)
+BuildRequires:	pkgconfig(Qt6Core)
+BuildRequires:	pkgconfig(Qt6Gui)
+BuildRequires:	pkgconfig(Qt6Widgets)
 BuildRequires:	pkgconfig(zlib)
-BuildRequires:	cmake(Qt5LinguistTools)
+BuildRequires:	cmake(Qt6LinguistTools)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(taglib)
-BuildRequires:	qt5-qtbase-devel
 BuildRequires:	desktop-file-utils
 BuildRequires:	appstream-util
 BuildRequires:	pkgconfig(fuse)
 BuildRequires:	readline-devel
 BuildRequires:	ninja
+
+%patchlist
+android-file-transfer-4.3-qt6.patch
 
 %description
 Interactive MTP client with Qt GUI.
