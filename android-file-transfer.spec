@@ -3,7 +3,7 @@
 Summary:	Interactive MTP client with Qt GUI
 Name:		android-file-transfer
 Version:	4.3
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		File tools
 Url:		https://github.com/whoozle/android-file-transfer-linux/
