@@ -2,8 +2,8 @@
 
 Summary:	Interactive MTP client with Qt GUI
 Name:		android-file-transfer
-Version:	4.3
-Release:	3
+Version:	4.5
+Release:	1
 License:	GPLv2+
 Group:		File tools
 Url:		https://github.com/whoozle/android-file-transfer-linux/
@@ -27,7 +27,7 @@ BuildRequires:	readline-devel
 BuildRequires:	ninja
 
 %patchlist
-android-file-transfer-4.3-qt6.patch
+# dropped (no longer applies): android-file-transfer-4.5-qt6.patch
 
 %description
 Interactive MTP client with Qt GUI.
@@ -35,7 +35,7 @@ Interactive MTP client with Qt GUI.
 #----------------------------------------------------------------------------
 
 %prep
-%autosetup -p1 -n %{name}-linux-%{version}
+%autosetup -p1 -n android-file-transfer-linux-4.5
 
 %build
 %cmake -GNinja
